@@ -139,8 +139,8 @@
 
                 //On resize fit the div2
                 function resize() {
-                    jQuery(div2).children().width(jQuery(div1).children().width());
-                    jQuery(div2).children().height(jQuery(div1).children().height());
+                    jQuery(div2).children().width(jQuery(div1).width());
+                    jQuery(div2).children().height(jQuery(div1).height());
                 }
                 resize();
                 jQuery(window).on('resize', resize);
