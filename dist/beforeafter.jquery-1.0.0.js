@@ -79,7 +79,7 @@
                     'left': '0',
                     'width': '100%',
                     //'height': 'auto',
-                    'float': 'left',
+                    //'float': 'left',
                 });
 
                 jQuery(secondImg).css({
