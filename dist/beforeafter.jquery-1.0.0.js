@@ -86,7 +86,7 @@
                     'position': 'absolute',
                     'top': '0',
                     'right': '0',
-                    'width': '100%',
+                    'width': 'auto',
                     'height': '100%',
                     'z-index': fZIndexInt + 1,
                 });
@@ -138,11 +138,11 @@
 
 
                 //On resize fit the div2
-                function resize() {
-                    jQuery(div2).children().width(jQuery(div1).width());
-                    jQuery(div2).children().height(jQuery(div1).height());
+                var resize = function() {
+                    if (jQuery(div1).children().width() > 0) jQuery(div2).children().width(jQuery(div1).children().width());
+                    if (jQuery(div1).children().height() > 0) jQuery(div2).children().height(jQuery(div1).children().height());
                 }
-                resize();
+
                 jQuery(window).on('resize', resize);
 
                 // If movable
@@ -202,8 +202,7 @@
                         jQuery(separator).css('opacity', settings.opacity);
                     });
 
-
-                    function mouseMove(e) {
+                    var mouseMove = function(e) {
 
                         var oPageX = e.pageX || e.touches[0].clientX;
                         var oLeft = jQuery(that).offset().left;
@@ -224,7 +223,7 @@
                     }
 
 
-                    function mouseOut(e) {
+                    var mouseOut = function(e) {
 
                         moveEnded = true;
 
@@ -292,6 +291,8 @@
                     });
 
                 }
+
+                resize();
 
             } else {
 
