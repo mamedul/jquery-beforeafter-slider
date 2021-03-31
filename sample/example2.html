@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example 1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./../dist/beforeafter.jquery-1.0.0.min.js"></script>
+    <!--<script src="https://unpkg.com/jquery-beforeafter-slider@1.0.0/beforeafter.jquery-1.0.0.js"></script>-->
+</head>
+
+<body>
+    <br>
+    <div style="max-width:96%; margin: 24px auto;">
+
+
+        <div class="beforeAfter">
+            <img src="./city-578174_1280.jpg">
+            <img src="./city-573775_1280.jpg">
+        </div>
+
+
+        <code>
+            <pre style="background-color:#000;color:#fff; padding: 8px;">
+
+$('.beforeAfter').beforeAfter({
+    movable: true,
+    clickMove: true,
+    position: 60,
+    separatorColor: 'red',
+    bulletColor: 'red',
+    onMoveStart: function(e) {
+        console.log(event.target);
+    },
+    onMoving: function() {
+        console.log(event.target);
+    },
+    onMoveEnd: function() {
+        console.log(event.target);
+    },
+});
+
+            </pre>
+        </code>
+
+    </div>
+
+
+    <script>
+        $('.beforeAfter').beforeAfter({
+            movable: true,
+            clickMove: true,
+            position: 60,
+            separatorColor: 'red',
+            bulletColor: 'red',
+            onMoveStart: function(e) {
+                console.log(event.target);
+            },
+            onMoving: function() {
+                console.log(event.target);
+            },
+            onMoveEnd: function() {
+                console.log(event.target);
+            },
+        });
+    </script>
+</body>
+
+</html>
