@@ -15,7 +15,7 @@ A responsive, touch-enabled, and highly customizable jQuery plugin to compare tw
 [![Demo 3](https://img.shields.io/badge/Demo-3-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example3.html) &nbsp; &nbsp; 
 [![Demo 4](https://img.shields.io/badge/Demo-4-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example4.html)
 
-![jQuery Before & After Viewer Demo](https://mamedul.github.io/jquery-beforeafter-slider/screencapture-jquery-beforeafter-slider.png)
+[![jQuery Before & After Viewer Demo](https://mamedul.github.io/jquery-beforeafter-slider/screencapture-jquery-beforeafter-slider.png)](https://mamedul.github.io/jquery-beforeafter-slider/)
 
 ## ✨ Features
 
