@@ -37,7 +37,7 @@ First, make sure you have jQuery included in your project. Then, include the plu
 
 ```html
 <!-- 1. Include jQuery -->
-<script src="[https://code.jquery.com/jquery-3.7.1.min.js](https://code.jquery.com/jquery-3.7.1.min.js)"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <!-- 2. Include the Before After Viewer plugin -->
 <script src="path/to/jquery.before-after.js"></script>
