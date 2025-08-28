@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Before-After Viewer Plugin</title>
+
+    <style>
+        /* Basic styles for the demo page */
+        html{
+            height: 100%;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1c1e21;
+            margin-bottom: 20px;
+        }
+        /* The before-after container will have its own specific styles injected by the plugin */
+        #my-viewer {
+            width: 100%;
+            /* The aspect ratio will be determined by the image */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Before & After Image Slider</h1>
+
+        <div class="controls">
+            <button id="getOpacity">Get Opacity</button>
+            <button id="setOpacity">Set Opacity to 0.2</button>
+            <button id="destroyBtn">Destroy</button>
+            <button id="initBtn">Initialize</button>
+        </div>
+
+        <!-- 1. HTML Structure for the Viewer -->
+        <div id="my-viewer">
+            <img src="https://placehold.co/800x600/f87171/ffffff?text=Before" alt="Before">
+            <img src="https://placehold.co/800x600/60a5fa/ffffff?text=After" alt="After">
+        </div>
+
+    </div>
+
+    <!-- 2. jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- 3. The Refactored jQuery Plugin -->
+    <script src="./../dist/beforeafter.jquery.min.js"></script>
+        
+    <!-- 4. Initialize and Control the Plugin -->
+    <script>
+        $(document).ready(function() {
+            function initializeViewer() {
+                // Check if it's already initialized to avoid re-creating it
+                if (!$('#my-viewer').data('beforeAfter')) {
+                    $('#my-viewer').beforeAfter({
+                        position: 70,
+                        onMoveStart: function() { console.log("Slider move started!"); },
+                        onMoving: function() { console.log("Slider is moving..."); },
+                        onMoveEnd: function() { console.log("Slider move ended!"); }
+                    });
+                    console.log('BeforeAfter viewer initialized.');
+                } else {
+                    console.log('Viewer is already initialized.');
+                }
+            }
+            
+            initializeViewer();
+
+            $('#getOpacity').on('click', function() {
+                var opacity = $('#my-viewer').beforeAfter('get', 'opacity');
+                alert('Current separator opacity is: ' + opacity);
+            });
+
+            $('#setOpacity').on('click', function() {
+                $('#my-viewer').beforeAfter('set', 'opacity', 0.2);
+                console.log('Separator opacity set to 0.2');
+            });
+
+            $('#destroyBtn').on('click', function() {
+                $('#my-viewer').beforeAfter('destroy');
+                console.log('BeforeAfter viewer destroyed.');
+            });
+            
+            $('#initBtn').on('click', function() {
+                initializeViewer();
+            });
+        });
+    </script>
+
+</body>
+</html>

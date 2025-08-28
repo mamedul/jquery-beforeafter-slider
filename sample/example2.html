@@ -5,48 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 1</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="./../dist/beforeafter.jquery-1.0.0.min.js"></script>
-    <!--<script src="https://unpkg.com/jquery-beforeafter-slider@1.0.0/beforeafter.jquery-1.0.0.js"></script>-->
+    <title>Example 2 :: jQuery BeforeAfter Slider</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./../dist/beforeafter.jquery.min.js"></script>
+    <!--<script src="https://unpkg.com/jquery-beforeafter-slider/beforeafter.jquery.js"></script>-->
 </head>
-
 <body>
-    <br>
+    <h1 style="text-align:center;">jQuery BeforeAfter Slider</h1>
+    <h2 style="text-align:center;">Example 2</h2>
     <div style="max-width:96%; margin: 24px auto;">
 
-
         <div class="beforeAfter">
-            <img src="./city-578174_1280.jpg">
-            <img src="./city-573775_1280.jpg">
+            <img src="./city-578174_1280.jpg" alt="Before">
+            <img src="./city-573775_1280.jpg" alt="After">
         </div>
 
-
-        <code>
-            <pre style="background-color:#000;color:#fff; padding: 8px;">
-
-$('.beforeAfter').beforeAfter({
-    movable: true,
-    clickMove: true,
-    position: 60,
-    separatorColor: 'red',
-    bulletColor: 'red',
-    onMoveStart: function(e) {
-        console.log(event.target);
-    },
-    onMoving: function() {
-        console.log(event.target);
-    },
-    onMoveEnd: function() {
-        console.log(event.target);
-    },
-});
-
-            </pre>
-        </code>
-
     </div>
-
 
     <script>
         $('.beforeAfter').beforeAfter({
@@ -66,6 +40,41 @@ $('.beforeAfter').beforeAfter({
             },
         });
     </script>
-</body>
 
+        <code>Codes:
+            <pre style="background-color:#000;color:#fff; padding: 8px;">
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="./../dist/beforeafter.jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;div class="beforeAfter"&gt;
+    &lt;img src="./city-578174_1280.jpg" alt="Before"&gt;
+    &lt;img src="./city-573775_1280.jpg" alt="After"&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $('.beforeAfter').beforeAfter({
+        movable: true,
+        clickMove: true,
+        position: 60,
+        separatorColor: 'red',
+        bulletColor: 'red',
+        onMoveStart: function(e) {
+            console.log(event.target);
+        },
+        onMoving: function() {
+            console.log(event.target);
+        },
+        onMoveEnd: function() {
+            console.log(event.target);
+        },
+    });
+&lt;/script&gt;
+
+            </pre>
+        </code>
+
+    <p style="text-align:center;">Author: <a href="https://mamedul.gitlab.io/jquery-beforeafter-slider/">MAMEDUL ISLAM</a><br>
+    Credits: <a href="https://github.com/mamedul/jquery-beforeafter-slider" target="_blank">jQuery BeforeAfter Slider</a> plugin by <a href="https://mamedul.gitlab.io/">MAMEDUL</a></p>
+    
+</body>
 </html>

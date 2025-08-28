@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Before-After Viewer (Refactored)</title>
+    <!-- 1. jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        /* Basic styles for the demo page */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1c1e21;
+            margin-bottom: 20px;
+        }
+        /* The before-after container will have its own specific styles injected by the plugin */
+        #my-viewer {
+            width: 100%;
+            /* The aspect ratio will be determined by the image */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Before & After Image Slider</h1>
+        <!-- 2. HTML Structure for the Viewer -->
+        <div id="my-viewer">
+            <img src="https://placehold.co/800x600/f87171/ffffff?text=Before" alt="Before">
+            <img src="https://placehold.co/800x600/60a5fa/ffffff?text=After" alt="After">
+        </div>
+    </div>
+
+    <!-- 3. The Refactored jQuery Plugin -->
+    <script>
+    /*!
+     * Before After Viewer - Refactored
+     * Copyright (c) 2021 MAMEDUL ISLAM (Original Author)
+     * Refactored for modern standards, mobile support, and callbacks.
+     * Licensed under the MIT license: https://opensource.org/licenses/MIT
+     * Version: 2.0.0
+     */
+    (function($) {
+        "use strict";
+
+        // Inject CSS into <head> to avoid inline styles
+        function injectStyles() {
+            if ($('#jQuery-beforeAfter-style').length) return;
+
+            var css = `
+                .before-after-container {
+                    position: relative;
+                    overflow: hidden;
+                    -webkit-user-select: none; -ms-user-select: none; user-select: none;
+                }
+                .before-after-container img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+                .before-wrapper {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                }
+                .after-wrapper {
+                    position: absolute;
+                    height: 100%;
+                    top: 0;
+                    right: 0;
+                    overflow: hidden;
+                }
+                .after-wrapper img {
+                    height: 100%;
+                    width: auto;
+                    max-width: none; /* Important for resizing */
+                }
+                .separator {
+                    position: absolute;
+                    width: 4px;
+                    height: 100%;
+                    top: 0;
+                    background-color: #ffffff;
+                    cursor: e-resize;
+                    transform: translateX(50%); /* Center the line on the cursor */
+                    z-index: 10;
+                }
+                .separator-bullet {
+                    position: absolute;
+                    width: 40px;
+                    height: 40px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    border-radius: 50%;
+                    background-color: #ffffff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                }
+                .arrow {
+                    border-style: solid;
+                    border-width: 0 3px 3px 0;
+                    display: inline-block;
+                    padding: 4px;
+                }
+                .left-arrow {
+                    transform: rotate(135deg);
+                    -webkit-transform: rotate(135deg);
+                }
+                .right-arrow {
+                    transform: rotate(-45deg);
+                    -webkit-transform: rotate(-45deg);
+                }
+            `;
+
+            $('<style>', { id: 'jQuery-beforeAfter-style', type: 'text/css' })
+                .html(css)
+                .appendTo('head');
+        }
+
+        $.fn.beforeAfter = function(options) {
+            // Inject styles once
+            injectStyles();
+
+            // Plugin Settings
+            var settings = $.extend({
+                movable: true,
+                clickMove: true,
+                position: 50,
+                opacity: 0.7,
+                activeOpacity: 1,
+                hoverOpacity: 0.9,
+                separatorColor: '#ffffff',
+                bulletColor: '#ffffff',
+                arrowColor: '#333333',
+                onMoveStart: function() {},
+                onMoving: function() {},
+                onMoveEnd: function() {}
+            }, options);
+
+            return this.each(function() {
+                var that = $(this);
+
+                if (that.children().length !== 2) {
+                    console.warn("BeforeAfter plugin requires exactly two child elements.");
+                    return;
+                }
+
+                // --- Setup DOM ---
+                var firstImg = that.children().eq(0);
+                var secondImg = that.children().eq(1);
+
+                that.addClass('before-after-container');
+
+                // Wrappers
+                var beforeWrapper = $('<div>', { 'class': 'before-wrapper' }).append(firstImg);
+                var afterWrapper = $('<div>', { 'class': 'after-wrapper' });
+                var afterImgClone = secondImg.clone().appendTo(afterWrapper);
+
+                // Separator
+                var separator = $('<div>', { 'class': 'separator' });
+                var bullet = $('<div>', { 'class': 'separator-bullet' });
+                var leftArrow = $('<i>', { 'class': 'arrow left-arrow' });
+                var rightArrow = $('<i>', { 'class': 'arrow right-arrow' });
+
+                bullet.append(leftArrow, rightArrow);
+                separator.append(bullet);
+
+                // Initial styling from settings
+                separator.css({
+                    'right': settings.position + '%',
+                    'background-color': settings.separatorColor,
+                    'opacity': settings.opacity
+                });
+                afterWrapper.css('width', settings.position + '%');
+                bullet.css('background-color', settings.bulletColor);
+                leftArrow.add(rightArrow).css('border-color', settings.arrowColor);
+
+                // Replace original content
+                secondImg.remove();
+                that.empty().append(beforeWrapper, afterWrapper, separator);
+
+
+                // --- Event Handlers ---
+                var isDragging = false;
+
+                // Function to handle the slider movement
+                var moveSlider = function(posX) {
+                    var containerOffset = that.offset().left;
+                    var containerWidth = that.width();
+                    var position = ((containerOffset + containerWidth) - posX);
+                    var percentage = Math.max(0, Math.min(100, (position / containerWidth) * 100));
+
+                    afterWrapper.css('width', percentage + '%');
+                    separator.css('right', percentage + '%');
+
+                    if (isDragging) {
+						if (typeof settings.onMoving === "function") {
+							settings.onMoving.call(that);
+						}
+                    }
+                };
+                
+                // On resize, ensure the "after" image has the same dimensions as the "before"
+                var onResize = function() {
+                    var beforeImgHeight = firstImg.height();
+                    var beforeImgWidth = firstImg.width();
+                    that.height(beforeImgHeight);
+                    afterImgClone.css({
+                        height: beforeImgHeight,
+                        width: beforeImgWidth
+                    });
+                };
+                
+                $(window).on('resize', onResize);
+                // Initial call to set dimensions correctly
+                // Use a small timeout to ensure images are loaded and have dimensions
+                setTimeout(onResize, 50);
+
+
+                if (settings.movable) {
+                    // Mouse & Touch Start
+                    separator.on('mousedown.ba touchstart.ba', function(e) {
+                        e.preventDefault();
+                        isDragging = true;
+                        separator.css('opacity', settings.activeOpacity);
+						if (typeof settings.onMoveStart === "function") {
+							settings.onMoveStart.call(that);
+						}
+
+                        // Bind move and end events to the document
+                        $(document).on('mousemove.ba touchmove.ba', function(e) {
+                            if (!isDragging) return;
+                            var pageX = (e.pageX !== undefined) ? e.pageX : e.originalEvent.touches[0].pageX;
+                            moveSlider(pageX);
+                        });
+
+                        $(document).on('mouseup.ba touchend.ba touchcancel.ba', function() {
+                            if (!isDragging) return;
+                            isDragging = false;
+                            separator.css('opacity', that.is(':hover') ? settings.hoverOpacity : settings.opacity);
+							if (typeof settings.onMoveEnd === "function") {
+								settings.onMoveEnd.call(that);
+							}
+                            // Unbind document events for performance
+                            $(document).off('.ba');
+                        });
+                    });
+
+                    // Hover effects
+                    that.on('mouseenter', function() {
+                        if (!isDragging) {
+                            separator.css('opacity', settings.hoverOpacity);
+                        }
+                    }).on('mouseleave', function() {
+                        if (!isDragging) {
+                            separator.css('opacity', settings.opacity);
+                        }
+                    });
+
+                    // Click to move
+                    if (settings.clickMove) {
+                        that.on('click', function(e) {
+                            // Don't trigger click-move if the separator was the target
+                            if ($(e.target).is(separator) || $(e.target).closest(separator).length) {
+                                return;
+                            }
+                            moveSlider(e.pageX);
+                        });
+                    }
+                }
+            });
+        };
+    }(window.jQuery || jQuery));
+
+
+    // 4. Initialize the Plugin with Callbacks
+    $(document).ready(function() {
+        $('#my-viewer').beforeAfter({
+            position: 50, // Start in the middle
+            onMoveStart: function() {
+                console.log("Slider move started!");
+            },
+            onMoving: function() {
+                // This can fire rapidly, so keep it lightweight
+                console.log("Slider is moving...");
+            },
+            onMoveEnd: function() {
+                console.log("Slider move ended!");
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>
