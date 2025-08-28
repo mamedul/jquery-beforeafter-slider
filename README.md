@@ -10,12 +10,12 @@ A responsive, touch-enabled, and highly customizable jQuery plugin to compare tw
 
 ### Live Demo
 
-[![Demo 1](https://img.shields.io/badge/Demo-1-brightgreen.svg)](https://mamedul.gitlab.io/jquery-beforeafter-slider/sample/example4.html) &nbsp; &nbsp; 
-[![Demo 2](https://img.shields.io/badge/Demo-2-brightgreen.svg)](https://mamedul.gitlab.io/jquery-beforeafter-slider/sample/example2.html) &nbsp; &nbsp; 
-[![Demo 3](https://img.shields.io/badge/Demo-3-brightgreen.svg)](https://mamedul.gitlab.io/jquery-beforeafter-slider/sample/example3.html) &nbsp; &nbsp; 
-[![Demo 4](https://img.shields.io/badge/Demo-4-brightgreen.svg)](https://mamedul.gitlab.io/jquery-beforeafter-slider/sample/example4.html)
+[![Demo 1](https://img.shields.io/badge/Demo-1-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example4.html) &nbsp; &nbsp; 
+[![Demo 2](https://img.shields.io/badge/Demo-2-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example2.html) &nbsp; &nbsp; 
+[![Demo 3](https://img.shields.io/badge/Demo-3-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example3.html) &nbsp; &nbsp; 
+[![Demo 4](https://img.shields.io/badge/Demo-4-brightgreen.svg)](https://mamedul.github.io/jquery-beforeafter-slider/sample/example4.html)
 
-![jQuery Before & After Viewer Demo](https://mamedul.gitlab.io/jquery-beforeafter-slider/screencapture-jquery-beforeafter-slider.png)
+![jQuery Before & After Viewer Demo](https://mamedul.github.io/jquery-beforeafter-slider/screencapture-jquery-beforeafter-slider.png)
 
 ## ✨ Features
 

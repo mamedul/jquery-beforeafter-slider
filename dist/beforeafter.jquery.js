@@ -7,7 +7,7 @@
  *   https://opensource.org/licenses/MIT
  *
  * Project home:
- *   https://mamedul.gitlab.io/jquery-before-after-slider
+ *   https://mamedul.github.io/jquery-before-after-slider
  *
  * Version: 2.0.0
  */
